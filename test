@@ -1,0 +1,29 @@
+public static boolen add {
+try{
+    connection = JDBC.getconnection();
+    String sql = 'insert into student(name, age) values(?,?)';
+    perparedStatement = connection.CreatePerparedStatement(sql);
+    scanner.getString(1, name);
+    scanner.getInt(2, age);
+    
+    res int = perparedStatement.ExecentUpdate();
+    
+    if (res > 0) {
+    System.Out.Println("added successful !")
+    }
+    
+    }
+    catch (Expection.e) {
+    
+    } finally {
+    try{
+    
+    scanner.close;
+    perparedStatement.colse;
+    connection.close;
+    } catch(Expection.e) {
+    
+    }
+    }
+    
+}
