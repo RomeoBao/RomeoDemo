@@ -27,3 +27,110 @@ try{
     }
     
 }
+
+
+package com.google.sms.controller;
+
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
+import com.google.sms.pojo.Sms;
+import org.json.JSONException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.xml.ws.http.HTTPException;
+import java.io.IOException;
+
+@RestController
+@CrossOrigin
+public class SmsController {
+
+    @PostMapping("/send")
+    public void sms(@RequestBody Sms sms) {
+        System.out.println(sms);
+        int appId = 1400699888;
+        String appKey = "0733cd8b534472b894bf8f02f83a6de4";
+        int tempId = 1458856;
+        String sign = "RomeoBao公众号";
+
+        try {
+
+            String[] params = {sms.getCode()};
+
+            SmsSingleSender sender = new SmsSingleSender(appId, appKey);
+            SmsSingleSenderResult result = sender.sendWithParam("86", sms.getPhoneNumber(), tempId, params, sign, "", "");
+
+            System.out.println(result);
+        } catch (HTTPException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (com.github.qcloudsms.httpclient.HTTPException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+package com.google.sms.pojo;
+
+
+public class Sms {
+
+    private String phoneNumber;
+    private String code;
+    private int min;
+
+    public Sms() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Sms{" +
+                "phoneNumber='" + phoneNumber + '\'' +
+                ", code='" + code + '\'' +
+                ", min=" + min +
+                '}';
+    }
+
+    public Sms(String phoneNumber, String code, int min) {
+        this.phoneNumber = phoneNumber;
+        this.code = code;
+        this.min = min;
+
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+}
+
+
